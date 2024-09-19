@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import client from "./src/services/Connection.js";
 import cors from "cors";
 import config from "./src/commons/config.js";
+import response from "./src/responses/response.js";
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.post("/", (req, res) => {
 
 app.get("/salgrade", (req, res) => {
   client.query("SELECT * FROM SALGRADE", (err, result) => {
-    if (!err) res.send(result.rows);
+    if (!err) response(200, result.rows, "get all from salgrade", res)
     else res.send(err.message);
   });
 });
@@ -34,7 +35,7 @@ app.get("/salgrade/:grade", (req, res) => {
   client.query(
     `SELECT * FROM SALGRADE WHERE grade = ${grade}`,
     (err, result) => {
-      if (!err) res.send(result.rows[0]);
+      if (!err) response(200, result.rows,`get grade ${grade} from salgrade`, res)
       else res.send(err.message);
     }
   );
