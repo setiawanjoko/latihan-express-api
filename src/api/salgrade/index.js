@@ -24,7 +24,37 @@ router.get("/:grade", (req, res) => {
   );
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
+  const { losal, hisal } = req.body;
+  if (!losal || !hisal) {
+    console.log("checkpoint 1", req.body)
+    return res.sendStatus(400);
+  }
+  if (losal < 0) {
+    console.log("checkpoint 2", req.body)
+    return res.sendStatus(400);
+  }
+  if (hisal < losal) {
+    console.log("checkpoint 3", req.body)
+    return res.sendStatus(400);
+  }
+
+  await client.query(
+    `SELECT * FROM salgrade WHERE (losal < ${losal} AND hisal > ${losal}) OR (losal < ${hisal} AND hisal > ${hisal})`,
+    (err, result) => {
+      if (err) {
+        console.log("checkpoint 4", req.body)
+        return res.sendStatus(err.message);
+      }
+      if (result.rowCount > 0) {
+        console.log("checkpoint 5", req.body)
+        return res.sendStatus(400);
+      } else {
+        console.log("checkpoint 6", req.body)
+        return res.send(result.rows);
+      }
+    }
+  );
   // TODO: handler untuk menambahkan salgrade baru
   // Ketentuan salgrade
   // Menerima 2 parameters losal dan hisal
