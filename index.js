@@ -21,7 +21,7 @@ app.post('/', (req, res) => {
 })
 
 app.listen(config.app.port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${config.app.port}`)
 })
 
 client.connect(err => {
