@@ -1,8 +1,14 @@
-const express = require('express')
-const bodyParser  = require('body-parser')
-const app = express()
-const port = 3000
+import express from 'express'
+import bodyParser from 'body-parser'
+import client from './src/services/Connection.js'
+import cors from 'cors'
+import config from './src/commons/config.js'
 
+const app = express()
+
+app.use(cors({
+  origin: '*'
+}))
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
@@ -14,6 +20,11 @@ app.post('/', (req, res) => {
     res.send('Login berhasil')
 })
 
-app.listen(port, () => {
+app.listen(config.app.port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+client.connect(err => {
+  if(err) console.log(err.message)
+    else console.log('Database connected')
+});
