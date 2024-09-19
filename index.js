@@ -23,6 +23,7 @@ app.post("/", (req, res) => {
   res.send("Login berhasil");
 });
 
+// TODO: move routing with path /salgrade to new file
 app.get("/salgrade", (req, res) => {
   client.query("SELECT * FROM SALGRADE", (err, result) => {
     if (!err) response(200, result.rows, "get all from salgrade", res)
