@@ -16,3 +16,14 @@ npm i
 ```
 npm run dev
 ```
+
+## Testing API
+1. Install Thunder Client extension in VSCode or use Postman
+2. Make new request 
+3. Here are list of available endpoints
+```
+Default Path http://localhost:3000/ 
+
+GET /salgrade
+GET /salgrade/:grade
+```
